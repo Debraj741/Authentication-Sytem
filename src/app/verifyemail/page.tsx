@@ -18,7 +18,8 @@ export default function VerifyEmailPage() {
     const verifyUserEmail = async()=>{
       try {
         await axios.post("/api/users/verifyemail",{token})
-        setVerified(true)
+        setVerified(true)  
+        
       } catch (error:any) {
         setError(true)
         console.log("Error ageya vai.."); 
@@ -30,8 +31,8 @@ export default function VerifyEmailPage() {
     useEffect(() => {
       // window.loaction => url
       const urlToken = window.location.search.split("=")[1]
+      
       setToken(urlToken || "")
-
       /* 
 
       // Next Js Approach => RECOMMANDED

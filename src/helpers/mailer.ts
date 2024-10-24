@@ -1,12 +1,14 @@
 import nodemailer from 'nodemailer';
 import User from "@/models/userModel";
-import bcryptjs from 'bcryptjs';
-
+import { v4 as uuidv4 } from 'uuid';
 
 export const sendEmail = async({email, emailType, userId}:any) => {
     try {
         // create a hased token
-        const hashedToken = await bcryptjs.hash(userId.toString(), 10)
+        // const hashedToken = await bcryptjs.hash(userId.toString(), 10)
+
+        // Using uuid create token
+        const hashedToken = uuidv4();
 
         if (emailType === "VERIFY") {
             await User.findByIdAndUpdate(userId, 
@@ -39,7 +41,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
 
 
         const mailOptions = {
-            from: 'hitesh@gmail.com',
+            from: 'debraj@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password",
             html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
